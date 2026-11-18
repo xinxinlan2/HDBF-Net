@@ -1,0 +1,38 @@
+Checkpoint: checkpoints_dfc2023/hdbf_dinov2_unireplknet_localconditioning100/261110_221208/checkpoint_best_mae.pth
+Split: val | Weights: EMA model_state_dict | AMP: True
+Split file: /public/home/znx_221124120159/dataset/dfc2023/dfc23_newsplit/val.txt
+Height validity: footprint & source validity & finite height & height > min_height
+Loaded checkpoint epoch: 54
+UniRepLKNet-S + ADE20K feature decoder; new binary heads; native RGB detail
+Dense local structure: width192, learned upsampling, two local-affinity steps; thresholds=0.5
+Height guidance=1.000; original height head/corrections, no GT input or BN recalibration
+Geometry-height mode: asymmetric-local; selected by checkpoint metadata
+Joint-model path diagnostics, not independently retrained ablations:
+cnn_mask F1=0.8182
+cnn_contour F1=0.5305
+semantic_mask F1=0.8625
+semantic_contour F1=0.5470
+Loaded checkpoint epoch: 54
+Context-detail height head: active | continuous base + bounded local detail
+Model: HDBF-Net-DINOv2-UniRepLKNet-LocalConditioning | Input: RGB+SAR
+
+Markdown row candidate:
+| HDBF-Net-DINOv2-UniRepLKNet-LocalConditioning | RGB+SAR | 0.7006 | 5.4624 | 0.6578 | 0.8401 | 0.9180 | 3.2729 |
+
+[Mask]
+F1=0.9016 Precision=0.9048 Recall=0.8986 IoU=0.8209
+
+[Contour]
+F1=0.6941
+
+[Full Image]
+pixels=48234496  rel_pixels=15647995  MAE=2.5990  RMSE=5.6633  AbsRel=1.2233  d1=0.5439  d2=0.7182  d3=0.8027
+
+[GT Height > 0.1m]
+pixels=15647995  rel_pixels=15647995  MAE=4.0292  RMSE=6.8109  AbsRel=1.2233  d1=0.5439  d2=0.7182  d3=0.8027
+
+[Building Mask All Pixels]
+pixels=12034469  rel_pixels=10793127  MAE=4.1418  RMSE=6.9431  AbsRel=0.7006  d1=0.6578  d2=0.8401  d3=0.9180
+
+[Building Mask + GT Height > 0.1m]
+pixels=10793127  rel_pixels=10793127  MAE=3.2729  RMSE=5.4624  AbsRel=0.7006  d1=0.6578  d2=0.8401  d3=0.9180

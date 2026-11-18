@@ -1,0 +1,8 @@
+{
+  "sha256": "67efb2494f12e2bccaa19282b8d2eb0d466fe5755584e5fb9903cd188ebc0e64",
+  "file": "upernet_unireplknet_s_in22k_512_160k_ade20k_miou51.86.pth",
+  "loaded": {
+    "cnn": 1309,
+    "ade_decoder": 72
+  }
+}

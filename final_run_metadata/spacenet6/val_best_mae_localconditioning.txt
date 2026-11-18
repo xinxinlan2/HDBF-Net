@@ -1,0 +1,35 @@
+Checkpoint: checkpoints_spacenet6/hdbf_dinov2_unireplknet_localconditioning100/261109_191439/checkpoint_best_mae.pth
+Split: val | Weights: EMA model_state_dict | AMP: True
+Inference: sliding window=768, stride=384; uniform height/probability averaging; mask threshold=0.5; contour threshold=0.5; BN fixed
+Loaded checkpoint epoch: 43
+Structure: UniRep 192-channel dense local decoder; four-band SAR
+CNN geometry -> initial height: True; selected by checkpoint metadata
+Geometry-height mode: asymmetric-local; selected by checkpoint metadata
+Predicted-height guidance=1.000; original height head/corrections; no GT input
+Model: HDBF-Net-DINOv2-UniRepLKNet-LocalConditioning | Input: RGB+SpaceNet6 SAR (4 bands)
+Contour refinement: standard
+Fusion: task-aware | Encoder: DINOv2 ViT-B/14 | TaskSplit: True
+Height target: pixel-level AHN DSM minus AHN DTM inside SpaceNet 6 footprints
+SAR normalization: linear | clip=60 dB
+RGB normalization: ImageNet
+
+Markdown row candidate:
+| HDBF-Net-DINOv2-UniRepLKNet-LocalConditioning | RGB+SAR | 0.2291 | 3.0372 | 0.6815 | 0.8847 | 0.9555 | 1.6498 |
+
+[Mask]
+F1=0.8587 Precision=0.8613 Recall=0.8561 IoU=0.7524
+
+[Contour]
+F1=0.5467 Precision=0.4985 Recall=0.6053
+
+[Full Image]
+pixels=282690000  rel_pixels=16565317  MAE=0.8187  RMSE=2.0072  AbsRel=0.2291  d1=0.6815  d2=0.8847  d3=0.9555
+
+[GT Height > 0.1m]
+pixels=16565317  rel_pixels=16565317  MAE=1.6498  RMSE=3.0372  AbsRel=0.2291  d1=0.6815  d2=0.8847  d3=0.9555
+
+[Building Mask All Pixels]
+pixels=19215929  rel_pixels=16565317  MAE=2.7350  RMSE=4.7493  AbsRel=0.2291  d1=0.6815  d2=0.8847  d3=0.9555
+
+[Building Mask + GT Height > 0.1m]
+pixels=16565317  rel_pixels=16565317  MAE=1.6498  RMSE=3.0372  AbsRel=0.2291  d1=0.6815  d2=0.8847  d3=0.9555
