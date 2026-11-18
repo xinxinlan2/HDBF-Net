@@ -1,0 +1,2 @@
+# Install the PyTorch/torchvision CUDA pair first; see README.md.
+-r requirements_dfc2023.txt

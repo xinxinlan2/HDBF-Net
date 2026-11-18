@@ -1,0 +1,5 @@
+{
+  "pretrained/dinov2/dinov2_vitb14_pretrain.pth": "0b8b82f85de91b424aded121c7e1dcc2b7bc6d0adeea651bf73a13307fad8c73",
+  "pretrained/segformer/segformer_b4_ade20k.bin": "bd27271115df105a3d8b4941001cb81de73188716988ed62815764906c9ebdcf",
+  "pretrained/unireplknet/upernet_unireplknet_s_in22k_512_160k_ade20k_miou51.86.pth": "67efb2494f12e2bccaa19282b8d2eb0d466fe5755584e5fb9903cd188ebc0e64"
+}

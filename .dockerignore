@@ -1,0 +1,17 @@
+.git
+.idea
+__pycache__
+*.pyc
+*.pyo
+data
+dataset
+output
+logs
+checkpoints_dfc2023
+checkpoints
+checkpoints_spacenet6
+checkpoints_dfc2023_ablation
+checkpoints_spacenet6_ablation
+*.zip
+*.tar
+*.tar.gz

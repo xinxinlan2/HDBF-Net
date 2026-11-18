@@ -1,0 +1,20 @@
+# Weights and generated runs are distributed separately.
+checkpoints/
+checkpoints_*/
+*.pth
+*.pt
+*.bin
+*.tar
+*.zip
+logs/
+data/
+output/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.env
+.idea/
+.vscode/
+.DS_Store
+# Do not ignore JSON: source locks and final-run metadata belong in Git.
