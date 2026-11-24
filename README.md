@@ -1,4 +1,17 @@
-# HDBF-Net: final reproducibility package
+# HDBF-Net
+
+Joint building footprint, contour, and height estimation from optical--SAR imagery.
+
+## Getting started
+
+- **Evaluate the released models:** install the environment, download the final
+  checkpoints, prepare the matching data/split manifests, and follow Evaluation.
+  Separate encoder initialization weights are not needed.
+- **Train or run ablations:** additionally download all three initialization
+  checkpoints listed below. Run commands from the repository root in Linux/Bash.
+- Model weights and datasets are not included in this repository.
+
+## Implementation
 
 This package contains the final LocalConditioning implementation used for
 DFC2023 and SpaceNet6+AHN. Historical audit tools, retired experiment
@@ -21,13 +34,12 @@ terms; inclusion here is not a grant of redistribution rights.
 
 ## Final trained checkpoints
 
-Download checkpoint.zip from:
-https://pan.baidu.com/s/1p0t_UHA059_A4BB8q-f6Dw?pwd=vsgq
-Extraction code: vsgq
+Download [checkpoint.zip from Baidu Netdisk](https://pan.baidu.com/s/1p0t_UHA059_A4BB8q-f6Dw?pwd=vsgq).
+Extraction code: `vsgq`.
 
 Use checkpoint_best_mae.pth for BOTH datasets, not best_contour or best_f1.
-The archive itself has not been independently downloaded/verified here.
-Validate the extracted files against these local reference SHA256 values:
+Validate each extracted checkpoint against the reference SHA256 below
+(`sha256sum /path/to/checkpoint_best_mae.pth` on Linux):
 
 | Dataset | Run | Selected epoch | SHA256 |
 |---|---|---:|---|
@@ -56,7 +68,77 @@ not required and are excluded. Initialization weights are distributed
 separately from this GitHub package; place them at the three paths above
 before training. Their hashes are in PRETRAINED_SHA256.json.
 
+### Official sources and downloads
+
+| Initialization | Source | Role in HDBF-Net |
+|---|---|---|
+| DINOv2 ViT-B/14, without registers | [Meta DINOv2](https://github.com/facebookresearch/dinov2#pretrained-models) | RGB encoder |
+| SegFormer-B4, ADE20K | [NVIDIA checkpoint](https://huggingface.co/nvidia/segformer-b4-finetuned-ade-512-512/blob/main/pytorch_model.bin) | SAR patch-projection/normalization initialization |
+| UniRepLKNet-S, ImageNet-22K then ADE20K | [Author checkpoint](https://huggingface.co/DingXiaoH/UniRepLKNet/blob/main/upernet_unireplknet_s_in22k_512_160k_ade20k_miou51.86.pth), [upstream project](https://github.com/AILab-CVC/UniRepLKNet) | CNN encoder and UPerNet decoder features |
+
+Run from the repository root. These commands download initialization weights,
+not the final trained HDBF-Net checkpoints:
+
+```bash
+mkdir -p checkpoints/pretrained/{dinov2,segformer,unireplknet}
+
+curl -fL --retry 3 \
+  https://dl.fbaipublicfiles.com/dinov2/dinov2_vitb14/dinov2_vitb14_pretrain.pth \
+  -o checkpoints/pretrained/dinov2/dinov2_vitb14_pretrain.pth
+
+curl -fL --retry 3 \
+  https://huggingface.co/nvidia/segformer-b4-finetuned-ade-512-512/resolve/main/pytorch_model.bin \
+  -o checkpoints/pretrained/segformer/segformer_b4_ade20k.bin
+
+curl -fL --retry 3 \
+  https://huggingface.co/DingXiaoH/UniRepLKNet/resolve/main/upernet_unireplknet_s_in22k_512_160k_ade20k_miou51.86.pth \
+  -o checkpoints/pretrained/unireplknet/upernet_unireplknet_s_in22k_512_160k_ade20k_miou51.86.pth
+```
+
+The SegFormer download is named `pytorch_model.bin` upstream; save it as
+`segformer_b4_ade20k.bin` as above. Do not substitute a classification-only
+UniRepLKNet checkpoint or a DINOv2 variant with registers.
+
+Verify all three files before training. Paths in `PRETRAINED_SHA256.json`
+are relative to `checkpoints/`:
+
+```bash
+python - <<'PY'
+import hashlib
+import json
+from pathlib import Path
+
+expected = json.loads(Path("PRETRAINED_SHA256.json").read_text())
+for name, digest in expected.items():
+    path = Path("checkpoints") / name
+    actual = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            actual.update(chunk)
+    if actual.hexdigest() != digest:
+        raise SystemExit(f"SHA256 mismatch: {path}; check the download/version.")
+    print(f"OK: {path}")
+PY
+```
+
+If a download fails, use its source page to download the same file manually.
+Keep the expected hash unchanged; a mismatch must be resolved before training.
+
 ## Training
+
+### Data prerequisites
+
+The commands expect prepared labels and the original split manifests, not
+just raw imagery. DFC2023 uses `dfc23_newsplit/{train,val,test}.txt` under
+the dataset directory; SpaceNet6+AHN uses `splits/{train,val,test}.txt`
+under `processed_height_dense`. The latter includes the prepared AHN-derived
+height supervision. Downloading SpaceNet6 imagery alone is not sufficient.
+
+This cleaned package does not include raw-data preparation tools or the
+prepared datasets. The metadata records the experimental configuration;
+it does not replace the required label files and split manifests.
+
+### Launch training
 
 Use the original prepared data and split manifests. Set local data paths
 explicitly; the scripts' fallback paths refer to the original cluster.
