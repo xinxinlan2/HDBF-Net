@@ -54,7 +54,7 @@
   "hdbf/unirep_structure.py": "c430d3e820dc63317d55e830e7d0bfb762319b0d63bc22da3188fd9d8f344619",
   "LICENSE": "70d5b2cc559038be87acecfb7829d344d3baa9528a47afda6d00043039f4877e",
   "PRETRAINED_SHA256.json": "6af1249989823cd4ab6a653edbda881e1f4eac65b5644226e67f00f9df89d836",
-  "README.md": "46298b3c82d1619f2efd58afe47140bd48a181c97ef6a800fda42823ab62b7c4",
+  "README.md": "288b50d38f9b9369c970a2b86a47f1c04be9741238f10a399e2ce8e40ecdce5d",
   "requirements.txt": "46493135d1de1f575ccaffeda95a54b12745a6cc5508b534fe1bc070e5a9abd5",
   "requirements_dfc2023.txt": "496676d0bb6770eb00aecaeb2a3076c2a4fc74673b34e46098770af325c19ffe",
   "run_train_dfc2023.sh": "a9a986b13b36ea361f3a92bfc4899da131df2d7110b1bced52926a1b313e6ee4",
